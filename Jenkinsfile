@@ -40,7 +40,7 @@ echo "build number: ${env.BUILD_NUMBER}"
 
       curl -u shiva:Shiva@115G \
       --upload-file /var/lib/jenkins/workspace/Scripted-way-pl/target/maven-web-application.war \
-      "http://3.110.56.41:8080/manager/text/deploy?path=/maven-web-application&update=true"
+      "http://3.110.153.106:8080/manager/text/deploy?path=/maven-web-application&update=true"
           
         """
     }
