@@ -27,12 +27,12 @@ echo "build number: ${env.BUILD_NUMBER}"
    {
     sh "${mavenHome}/bin/mvn sonar:sonar"
    }
-
+ notifyBuild('SQ Report Generated')
    stage('Deploy Into Nexus')
    {
     sh "${mavenHome}/bin/mvn clean deploy"
    }
-
+  
     stage('Deploy to Tomcat') 
     {
       
