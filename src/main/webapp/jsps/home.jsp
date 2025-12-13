@@ -46,7 +46,7 @@
 <body>
 
 <header>
-   <marquee> <h1>🚀 Welcome to Mohan's Lapaki Company 🚀</h1> </marquee>
+   <marquee> <h1>🚀 Welcome to Shiva's AWS Portal 🚀</h1> </marquee>
     <h3>Training | Development | Consulting</h3>
 </header>
 
