@@ -1,87 +1,105 @@
-node 
+pipeline
 {
-    //   /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.9.6
-   def mavenHome=tool name: "Maven-3.9.6"
-echo "git branch Name: ${env.BRANCH_NAME}"
-echo "build number: ${env.BUILD_NUMBER}"
+	agent any
+	tools
+	{
+	  maven "Maven-3.9.6"
+	}
+	stages
+	{
+      stage('Git checkout')
+      {
+         steps
+         {
+          notifyBuild('STARTED')
+          git branch: 'Dev', url: 'https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git'
+         }
+      }
+      stage('Code Compile')
+      {
+        steps
+        {
+          sh "mvn compile"
+        }
+      }
+      stage('Build')
+      {
+        steps
+        {
+         sh "mvn clean package"
+        }
+      }
+      stage('SQ Report')
+       {
+         steps
+         {
+          sh "mvn sonar:sonar"
+         }
+       }
+       stage('Deploy to Nexus')
+        {
+          steps	
+           {
+            sh "mvn deploy"
+           }
+        }
+        stage('Deploy to Tomcat')
+        {
+          steps
+          {
+            sh """
 
-   try
-   {  
-
-      stage('git checkout')
-   {
-      notifyBuild('STARTED')
-     git branch: 'Dev', url: 'https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git'
-   }
-   stage('compile')
-   {
-    sh "${mavenHome}/bin/mvn compile"
-   }
-
-   stage('Build')
-   {
-    sh "${mavenHome}/bin/mvn clean package"
-
-   }
-   stage('SQ Report')
-   {
-    sh "${mavenHome}/bin/mvn sonar:sonar"
-   }
- notifyBuild('SQ Report Generated')
-   stage('Deploy Into Nexus')
-   {
-    sh "${mavenHome}/bin/mvn clean deploy"
-   }
-  
-    stage('Deploy to Tomcat') 
-    {
+           curl -u shiva:Shiva@115G \
+      --upload-file /var/lib/jenkins/workspace/Jio-Declarative-PL-dev/target/maven-web-application.war \
+      "http://13.201.193.191:8080/manager/text/deploy?path=/maven-web-application&update=true"
       
-      sh """
+               """
+          }
+        }      
+	} //stages ending
 
-      curl -u shiva:Shiva@115G \
-      --upload-file /var/lib/jenkins/workspace/Scripted-way-pl/target/maven-web-application.war \
-      "http://3.110.153.106:8080/manager/text/deploy?path=/maven-web-application&update=true"
-          
-        """
+  post{
+       success {
+
+       script 
+       {
+         notifyBuild(currentBuild.result)
+       }
+
+       }
+
+       failure {
+
+       script
+       {
+         notfiyBuild(currentBuild.result)
+       }
+
+       }
+
+  }
+
+} //Pipeline ending
+
+
+// Notification method
+def notifyBuild(String buildStatus = 'STARTED') {
+    buildStatus = buildStatus ?: 'SUCCESS'
+
+    def colorCode
+    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${subject} (${env.BUILD_URL})"
+
+    switch (buildStatus) {
+        case 'STARTED':
+            colorCode = '#FFFF00' // Yellow
+            break
+        case 'SUCCESS':
+            colorCode = '#00FF00' // Green
+            break
+        default:
+            colorCode = '#FF0000' // Red
     }
 
-   }  //try block end
-   catch (e) {
-   
-       currentBuild.result = "FAILED"
-
-  } finally {
-    // Success or failure, always send notifications
-    notifyBuild(currentBuild.result)       //function calling
-  }
-
-	
-}  //node ending
-
-
-def notifyBuild(String buildStatus = 'STARTED') {
-  // build status of null means successful
-  buildStatus =  buildStatus ?: 'SUCCESS'
-
-  // Default values
-  def colorName = 'RED'
-  def colorCode = '#FF0000'
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
-
-  // Override default values based on build status
-  if (buildStatus == 'STARTED') {
-    color = 'YELLOW'
-    colorCode = '#FFFF00'
-  } else if (buildStatus == 'SUCCESS') {
-    color = 'GREEN'
-    colorCode = '#00F217'
-  } else {
-    color = 'RED'
-    colorCode = '#FF0000'
-  }
-
-  // Send notifications
-  slackSend (color: colorCode, message: summary, channel: '#devops-group')
-  
+    slackSend(color: colorCode, message: summary, channel: '#jio-declaratie-job')
 }
