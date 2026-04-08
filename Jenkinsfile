@@ -58,11 +58,11 @@ pipeline{
                           """
               }
              }
-             stage('bsnl-qa')
+             stage('bsnl-UAT')
              {
               steps
               {
-               build job: 'bsnl-qa' // This is down stream job
+               build job: 'bsnl-uat' // This is down stream job
               }
              }
             } //stages ending 
