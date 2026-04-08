@@ -98,13 +98,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>KK FUNDA Releases Nexus Repository</name>
-	      <url>http://172.31.40.189:8081/repository/flipkart-release/</url>
+	      <url>http://43.205.241.225:8081/repository/bsnl-release-repo/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>KK FUNDA Snapshot Nexus Repository </name>
-	      <url>http://3.108.228.247:8081/repository/Jio-OM/</url>
+	      <url>http://43.205.241.225:8081/repository/bsnl-snapshot-repo/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
