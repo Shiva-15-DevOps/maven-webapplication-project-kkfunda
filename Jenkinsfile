@@ -55,7 +55,7 @@ pipeline
       sh """
 
            curl -u shiva:shiva@115G \
-      --upload-file /var/lib/jenkins/workspace/bsnl-dev-/target/maven-web-application.war \
+      --upload-file /var/lib/jenkins/workspace/bsnl-dev/target/maven-web-application.war \
       "http://13.201.69.49:8080/manager/text/deploy?path=/maven-web-application&update=true"
       
                """
