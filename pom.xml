@@ -5,7 +5,7 @@
 	<groupId>com.kk</groupId>
 	<artifactId>maven-web-application-kkfunda</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	
 	<name>maven-web-application</name>
 
@@ -104,7 +104,7 @@
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>KK FUNDA Snapshot Nexus Repository </name>
-	      <url>http://43.205.241.225:8081/repository/bsnl-snapshot-repo/</url>
+	      <url>http://13.201.62.226:8081/repository/bsnl-snapshot-repo/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
