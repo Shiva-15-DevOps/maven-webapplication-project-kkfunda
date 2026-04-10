@@ -18,7 +18,7 @@ pipeline{
       stages{
           stage('Git checkout'){
             steps{
-	          git branch: "${params.BRANCH-NAME}"
+	          git branch: "${params.BRANCH-NAME}", url: "https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git"
 	          }
   
             }
