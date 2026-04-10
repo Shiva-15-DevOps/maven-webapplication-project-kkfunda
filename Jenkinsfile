@@ -45,7 +45,7 @@ pipeline {
                         Tomcat: {
                             sh """
                                 curl -u shiva:shiva@115G \
-                                --upload-file target/maven-web-application.war \
+                                --upload-file /var/lib/jenkins/workspace/Parallel-job-Pl/target/maven-web-application.war \
                                 "http://13.200.253.67:8080/manager/text/deploy?path=/maven-web-application&update=true"
                             """
                         }
