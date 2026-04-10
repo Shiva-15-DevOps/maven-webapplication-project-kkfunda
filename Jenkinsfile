@@ -6,7 +6,7 @@ pipeline{
 
 	 parameters{
 		 choice(
-			 name: "BRANCH-NAME",
+			 name: "BRANCH_NAME",
 			 choices:[
 				 'Dev',
 				 'qa',
@@ -18,7 +18,7 @@ pipeline{
       stages{
           stage('Git checkout'){
             steps{
-	          git branch: "${params.BRANCH-NAME}", url: "https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git"
+	          git branch: "${params.BRANCH_NAME}", url: "https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git"
 	          }
   
             }
