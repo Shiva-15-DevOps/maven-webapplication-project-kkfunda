@@ -7,7 +7,7 @@ pipeline{
     
     stages{ 
      
-     stage1('Git checkout'){
+     stage('Git checkout'){
 	 
 	 steps{
 	 
@@ -17,7 +17,7 @@ pipeline{
 	  
 	 }
 	  
-     stage2('compile'){
+     stage('compile'){
        
      steps{
 	 
@@ -27,7 +27,7 @@ pipeline{
 	 
    }
     
-    stage3('Maven and SQ'){
+    stage('Maven and SQ'){
 	
 	steps{
 	
@@ -47,7 +47,7 @@ pipeline{
 	
 	}
 
-     stage4('nexus and Tomcat'){
+     stage('nexus and Tomcat'){
 	 
 	 steps{
 	  parallel(
@@ -67,14 +67,10 @@ pipeline{
       
                """
 	  
-	  }
-	  
-	  )
-	 
-   }
-	 
+	}  
+   )	 
+  } 
  }
-
-}
+}// stage ending
+} //pipeline ending
 	
-}   
