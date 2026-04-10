@@ -12,7 +12,7 @@ pipeline{
 				 'qa',
 				 'uat',
 				 'f1'
-			 ]
+			 ],
 		 )
 	 }
       stages{
