@@ -3,11 +3,22 @@ pipeline{
     tools{
 	    maven "maven-3.9.6"
        }
- 
+
+	 parameters{
+		 choice(
+			 name: "BRANCH-NAME",
+			 choices:[
+				 'Dev',
+				 'qa',
+				 'uat',
+				 'f1'
+			 ]
+		 )
+	 }
       stages{
           stage('Git checkout'){
             steps{
-	          git branch: 'qa', url: 'https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git'
+	          git branch: "${params.BRANCH-NAME}"
 	          }
   
             }
