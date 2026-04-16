@@ -7,14 +7,6 @@ pipeline{
     }
 
      stages{   // stage starting
-         stage('Notify Start') {
-            steps {
-                script {
-                    // Assuming `notify` is defined in your shared library
-                    notify.build('STARTED')
-                }
-            }
-        }
          stage('Git Checkout'){
              steps{
                  git branch: 'f2',
