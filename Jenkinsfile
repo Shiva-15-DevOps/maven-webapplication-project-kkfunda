@@ -7,7 +7,7 @@ pipeline{
     }
 
      stages{   // stage starting
-
+         notify.build('STARTED')
          stage('Git Checkout'){
              steps{
                  git branch: 'f2',
