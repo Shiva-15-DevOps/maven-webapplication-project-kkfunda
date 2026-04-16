@@ -20,21 +20,9 @@ pipeline{
              }
          }
 
-         stage('Build'){
+         stage('BuildToNexus'){
              steps{
-                 sh "mvn clean package"
-             }
-         }
-
-         stage('SQ'){
-             steps{
-                 sh "mvn sonar:sonar"
-             }
-         }
-
-         stage('Nexus'){
-             steps{
-                 sh "mvn deploy"
+                 buildToNexus()
              }
          }
      } //stages ending
