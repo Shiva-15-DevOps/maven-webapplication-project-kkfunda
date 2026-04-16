@@ -1,56 +1,53 @@
-pipeline {
+@Library(Sharedlibslack) _
+pipeline{
     agent any
-
-    tools {
+    tools{
         maven "maven-3.9.6"
     }
 
-    stages {
+     stages{   // stage starting
 
-        stage('Git checkout') {
-            steps {
-                git branch: 'f2',
+         stage('Git Checkout'){
+             steps{
+                 git branch: 'f2',
                     url: 'https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git'
+             }
+         }
+
+         stage('Compile'){
+             steps{
+                 sh "mvn compile"
+             }
+         }
+
+         stage('Build'){
+             steps{
+                 sh "mvn clean package"
+             }
+         }
+
+         stage('SQ'){
+             steps{
+                 sh "mvn sonar:sonar"
+             }
+         }
+
+         stage('Nexus'){
+             steps{
+                 sh "mvn deploy"
+             }
+         }
+     } //stages ending
+
+    post{
+        success{
+            script{
+                sendSlackNotifications(currentBuild.result)
             }
         }
-
-        stage('Compile') {
-            steps {
-                sh "mvn compile"
-            }
-        }
-
-        stage('Build and Sonar') {
-            steps {
-                script {
-                    parallel(
-                        Build: {
-                            sh "mvn clean package"
-                        },
-                        Sonar: {
-                            sh "mvn sonar:sonar"
-                        }
-                    )
-                }
-            }
-        }
-
-        stage('Nexus and Tomcat Deploy') {
-            steps {
-                script {
-                    parallel(
-                        Nexus: {
-                            sh "mvn deploy"
-                        },
-                        Tomcat: {
-                            sh """
-                                curl -u shiva:shiva@115G \
-                                --upload-file /var/lib/jenkins/workspace/Parallel-job-Pl/target/maven-web-application.war \
-                                "http://13.200.253.67:8080/manager/text/deploy?path=/maven-web-application&update=true"
-                            """
-                        }
-                    )
-                }
+        failure{
+            script{
+                sendSlackNotifications(currentBuild.result)
             }
         }
     }
