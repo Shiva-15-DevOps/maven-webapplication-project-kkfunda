@@ -1,4 +1,5 @@
-@Library(Sharedlibslack) _
+@Library('Sharedlibslack') _
+
 pipeline{
     agent any
     tools{
