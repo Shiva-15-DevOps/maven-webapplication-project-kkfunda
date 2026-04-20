@@ -9,7 +9,7 @@ pipeline{
       stages{
           stage('Git checkout'){
             steps{
-	          git branch: 'qa', url: 'https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git'
+	          git branch: 'uat', url: 'https://github.com/Shiva-15-DevOps/maven-webapplication-project-kkfunda.git'
 	          }
   
             }
